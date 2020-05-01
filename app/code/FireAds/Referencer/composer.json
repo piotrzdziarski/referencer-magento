@@ -1,0 +1,21 @@
+{
+    "name": "fireads/referencer",
+    "description": "Connecting shop with FireAds platform.",
+    "type": "magento2-module",
+    "version": "0.0.1",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "php": ">=7.2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FireAds\\Referencer\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

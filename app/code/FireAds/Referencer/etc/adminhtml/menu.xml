@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="FireAds_Referencer::bookmark" title="FireAds" translate="title"
+             module="FireAds_Referencer" parent="Magento_Backend::marketing" sortOrder="50"
+             dependsOnModule="FireAds_Referencer" resource="FireAds_Referencer::bookmark" />
+        <add id="FireAds_Referencer::settings" title="Settings" translate="title"
+             module="FireAds_Referencer" parent="FireAds_Referencer::bookmark" sortOrder="10"
+             dependsOnModule="FireAds_Referencer" action="fireads/settings"
+             resource="FireAds_Referencer::bookmark" />
+    </menu>
+</config>

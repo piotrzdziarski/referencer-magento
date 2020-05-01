@@ -1,0 +1,36 @@
+<form class="form" action="<?php echo $this->getUrl('fireads/settings/save') ?>" method="post" enctype="multipart/form-data">
+
+    <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>"/>
+
+    <div class="admin__field field field-crypt_key  required _required" data-ui-id="crypt-key-form-fieldset-element-form-field-crypt-key">
+        <label class="label admin__field-label" for="crypt_key" data-ui-id="crypt-key-form-fieldset-element-text-crypt-key-label">
+            Postback URL
+        </label>
+        <div class="admin__field-control control">
+            <input name="postback-url" style="width:32em;" value="<?php echo $block->getData('fireads-postback-url') ?>" maxlength="255" class="required-entry input-text admin__control-text required-entry _required" type="text" aria-required="true">
+        </div>
+    </div>
+
+    <div class="admin__field field field-crypt_key  required _required" data-ui-id="crypt-key-form-fieldset-element-form-field-crypt-key">
+        <label class="label admin__field-label" for="crypt_key" data-ui-id="crypt-key-form-fieldset-element-text-crypt-key-label">
+            Lead %
+        </label>
+        <div class="admin__field-control control">
+            <input id="procent" name="procent" style="width:60px; text-center" value="<?php echo $block->getData('fireads-procent') ?>" maxlength="255" class="required-entry input-text admin__control-text required-entry _required" type="text" aria-required="true">
+        </div>
+    </div>
+
+    <button id="submit" title="Change Encryption Key" type="submit" class="action-default scalable save primary save-encryption-key ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="crypt-key-edit-save-button" role="button" aria-disabled="false">
+        <span class="ui-button-text">
+            <span>Submit</span>
+        </span>
+    </button>
+</form>
+
+<style>
+    #submit {
+        margin-top: 25px;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+</style>

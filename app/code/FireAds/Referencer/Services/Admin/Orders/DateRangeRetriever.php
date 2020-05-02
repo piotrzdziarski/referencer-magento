@@ -16,8 +16,8 @@ class DateRangeRetriever
 
     private function getTimeFromGETParam($name)
     {
-        return (!isset($_GET[$name]) || !is_numeric($_GET[$name])) ?
-            null :
-            date('Y-m-d', $_GET[$name]);
+        return (isset($_GET[$name]) && is_numeric($_GET[$name])) ?
+            date('Y-m-d', $_GET[$name]) :
+            null;
     }
 }

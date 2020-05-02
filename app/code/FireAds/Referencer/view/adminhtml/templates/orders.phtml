@@ -1,0 +1,176 @@
+<div class="wrap">
+    <div class="settings-wrapper">
+        <form id="form-date" class="flex-column">
+            <div class="action-select-wrap" data-bind="css: {_active: opened}, outerClick: close.bind($data)">
+                <button class="action-select" data-bind="attr: {title: $t('Select Items')}, click: toggleOpened" title="Select Items">
+                    <span data-bind="i18n: 'Actions'">All</span>
+                </button>
+                <div class="action-menu-items">
+                    <ul class="action-menu" data-bind="css: {_active: opened}, foreach: {data: actions, as: 'action'}">
+                        <li data-bind="css: {_visible: $data.visible, _parent: $data.actions}">
+                            <span class="action-menu-item" data-bind="click: $parent.applyAction.bind($parent, type), i18n: label">Cancel</span>
+                            <!-- ko if: $data.actions --><!-- /ko -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex-ended">
+                <div class="flex-centered flex-column">
+                    <label for="fireads-purchases-date-from">From:</label>
+                    <input type="text" id="fireads-purchases-date-from" class="input-date" placeholder="Date" data-input
+                           value="<?php echo ($block->getData('date-from')) ? $block->getData('date-from') : "" ?>">
+                </div>
+                <div class="wrapper-to-date flex-centered flex-column">
+                    <label for="fireads-purchases-date-to">To:</label>
+                    <input type="text" id="fireads-purchases-date-to" class="input-date" placeholder="Date" data-input
+                           value="<?php echo ($block->getData('date-to')) ? $block->getData('date-to') : "" ?>">
+                </div>
+                <button id="btn-search"
+                        type="submit"
+                        class="last-page button btn-date">
+                    <span class="screen-reader-text">Search</span>
+                    <span aria-hidden="true">Search</span>
+                </button>
+            </div>
+        </form>
+        <div class="tablenav-pages">
+            <span class="displaying-num"><?php echo $block->getData('searched-orders-count') ?> positions</span>
+            <span class="pagination-links">
+                       <?php if ($block->getData('current-page') > 1): ?>
+                           <button id="btn-page-first" class="next-page button">
+                               <span class="screen-reader-text">First page</span>
+                               <span aria-hidden="true">«</span>
+                           </button>
+                           <button id="btn-page-previous" class="last-page button">
+                               <span class="screen-reader-text">Previous page</span>
+                               <span aria-hidden="true">‹</span>
+                            </button>
+                       <?php else: ?>
+                           <span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>
+                           <span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>
+                       <?php endif; ?>
+                        <span class="paging-input">
+                            <label for="current-page-selector" class="screen-reader-text">Current page</label>
+                            <input class="current-page" id="current-page-input" type="text" name="paged"
+                                   value="<?php echo $block->getData('current-page') ?>" size="1" aria-describedby="table-paging">
+                            <span class="tablenav-paging-text">
+                                out of
+                                <span id="pages-count" class="total-pages"><?php echo $block->getData('pages-count'); ?></span>
+                            </span>
+                         </span>
+                        <?php if ($block->getData('current-page') < $block->getData('pages-count')): ?>
+                            <button id="btn-page-next" class="next-page button">
+                                <span class="screen-reader-text">Next page</span>
+                                <span aria-hidden="true">›</span>
+                           </button>
+                            <button id="btn-page-last" class="last-page button">
+                                <span class="screen-reader-text">Last page</span>
+                                <span aria-hidden="true">»</span>
+                            </button>
+                        <?php else: ?>
+                            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>
+                            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>
+                        <?php endif; ?>
+                    </span>
+        </div>
+    </div>
+    <
+    <table class="wp - list-table widefat fixed striped posts">
+        <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Date</th>
+            <th scope="col">Total</th>
+        </tr>
+        </thead>
+
+
+        <tbody>
+        <?php foreach ($block->getData('page-orders') as $order): ?>
+            <!-- TODO: id with link to order, date created, currency and total value -->
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    requirejs(['flatpickr'], function() {
+        requirejs(['orders']);
+    })
+</script>
+
+<style>
+    tbody tr:nth-child(odd) td {
+        background: #f5f5f5 !important;
+    }
+
+    td {
+        background: white;
+        display: table-cell !important;
+    }
+
+    .total-orders-h2 {
+        font-weight: 400;
+    }
+
+    .settings-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        margin: 10px 0;
+    }
+
+    .flex-centered {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .flex-ended {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .flex-column {
+        flex-direction: column;
+    }
+
+    .wrapper-status {
+        margin-bottom: 2px;
+    }
+
+    .flatpickr-input {
+        background: #fff !important;
+        width: 143px;
+    }
+
+    .wrapper-to-date {
+        margin-left: 10px;
+    }
+
+    .btn-date {
+        margin-left: 10px !important;
+    }
+
+    .currency-wrapper {
+        display: inline-flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        flex-direction: column;
+    }
+
+    @media (min-width: 768px) {
+        .settings-wrapper {
+            flex-direction: row;
+            align-items: flex-end;
+        }
+
+        .tablenav-pages {
+            position: absolute;
+            right: 0;
+        }
+    }
+</style>

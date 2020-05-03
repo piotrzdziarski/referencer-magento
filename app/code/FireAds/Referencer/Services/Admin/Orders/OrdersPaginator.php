@@ -8,6 +8,11 @@ class OrdersPaginator
 
     public function getPagesCount($ordersCount)
     {
+        if ($ordersCount == 0) {
+            $this->pagesCount = 1;
+            return $this->pagesCount;
+        }
+
         $this->pagesCount = ceil($ordersCount / 20);
         return $this->pagesCount;
     }

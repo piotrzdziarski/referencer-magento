@@ -1,93 +1,104 @@
 <div class="wrap">
     <div class="settings-wrapper">
-        <form id="form-date" class="flex-column">
-            <div class="action-select-wrap" data-bind="css: {_active: opened}, outerClick: close.bind($data)">
-                <button class="action-select" data-bind="attr: {title: $t('Select Items')}, click: toggleOpened" title="Select Items">
-                    <span data-bind="i18n: 'Actions'">All</span>
+        <form id="form" class="flex-column">
+            <div id="wrapper-status" class="action-select-wrap">
+                <input id="input-status" type="hidden" name="status" value="<?php echo $block->getData('current-status-row')['status'] ?>"/>
+                <button class="status-text action-select" title="Select Items">
+                    <span id="input-status-text"><?php echo $block->getData('current-status-row')['label'] ?></span>
                 </button>
                 <div class="action-menu-items">
-                    <ul class="action-menu" data-bind="css: {_active: opened}, foreach: {data: actions, as: 'action'}">
-                        <li data-bind="css: {_visible: $data.visible, _parent: $data.actions}">
-                            <span class="action-menu-item" data-bind="click: $parent.applyAction.bind($parent, type), i18n: label">Cancel</span>
-                            <!-- ko if: $data.actions --><!-- /ko -->
+                    <ul id="list-status" class="action-menu">
+                        <li onclick="handleDropdownOptionClick('', 'All')">
+                            <span class="action-menu-item">All</span>
                         </li>
+                        <?php foreach ($block->getData('statuses') as $status): ?>
+                            <li onclick="handleDropdownOptionClick(<?php echo "'" . $status['status'] . "', '" . $status['label'] . "'" ?>)">
+                                <span class="action-menu-item"><?php echo $status['label'] ?></span>
+                            </li>
+                        <?php endforeach ?>
                     </ul>
                 </div>
             </div>
             <div class="flex-ended">
                 <div class="flex-centered flex-column">
-                    <label for="fireads-purchases-date-from">From:</label>
-                    <input type="text" id="fireads-purchases-date-from" class="input-date" placeholder="Date" data-input
+                    <label for="input-date-from">From:</label>
+                    <input type="text" id="input-date-from" class="input" placeholder="Date"
                            value="<?php echo ($block->getData('date-from')) ? $block->getData('date-from') : "" ?>">
                 </div>
                 <div class="wrapper-to-date flex-centered flex-column">
-                    <label for="fireads-purchases-date-to">To:</label>
-                    <input type="text" id="fireads-purchases-date-to" class="input-date" placeholder="Date" data-input
+                    <label for="input-date-to">To:</label>
+                    <input type="text" id="input-date-to" class="input" placeholder="Date"
                            value="<?php echo ($block->getData('date-to')) ? $block->getData('date-to') : "" ?>">
                 </div>
-                <button id="btn-search"
-                        type="submit"
-                        class="last-page button btn-date">
-                    <span class="screen-reader-text">Search</span>
-                    <span aria-hidden="true">Search</span>
+                <button id="submit" title="Search for FireAds orders" type="submit" class="action-default scalable save primary save-encryption-key ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="crypt-key-edit-save-button" role="button" aria-disabled="false">
+                    <span class="ui-button-text">
+                        <span>Submit</span>
+                    </span>
                 </button>
             </div>
         </form>
         <div class="tablenav-pages">
             <span class="displaying-num"><?php echo $block->getData('searched-orders-count') ?> positions</span>
             <span class="pagination-links">
-                       <?php if ($block->getData('current-page') > 1): ?>
-                           <button id="btn-page-first" class="next-page button">
-                               <span class="screen-reader-text">First page</span>
-                               <span aria-hidden="true">«</span>
-                           </button>
-                           <button id="btn-page-previous" class="last-page button">
-                               <span class="screen-reader-text">Previous page</span>
-                               <span aria-hidden="true">‹</span>
-                            </button>
-                       <?php else: ?>
-                           <span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>
-                           <span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>
-                       <?php endif; ?>
-                        <span class="paging-input">
-                            <label for="current-page-selector" class="screen-reader-text">Current page</label>
-                            <input class="current-page" id="current-page-input" type="text" name="paged"
-                                   value="<?php echo $block->getData('current-page') ?>" size="1" aria-describedby="table-paging">
-                            <span class="tablenav-paging-text">
-                                out of
-                                <span id="pages-count" class="total-pages"><?php echo $block->getData('pages-count'); ?></span>
-                            </span>
-                         </span>
-                        <?php if ($block->getData('current-page') < $block->getData('pages-count')): ?>
-                            <button id="btn-page-next" class="next-page button">
-                                <span class="screen-reader-text">Next page</span>
-                                <span aria-hidden="true">›</span>
-                           </button>
-                            <button id="btn-page-last" class="last-page button">
-                                <span class="screen-reader-text">Last page</span>
-                                <span aria-hidden="true">»</span>
-                            </button>
-                        <?php else: ?>
-                            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>
-                            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>
-                        <?php endif; ?>
+                <?php if ($block->getData('current-page') > 1): ?>
+                    <button id="btn-page-first" class="next-page button-date">
+                        <span aria-hidden="true">«</span>
+                    </button>
+                    <button id="btn-page-previous" class="last-page button-date">
+                        <span aria-hidden="true">‹</span>
+                    </button>
+                <?php else: ?>
+                    <span class="tablenav-pages-navspan button-date disabled" aria-hidden="true">«</span>
+                    <span class="tablenav-pages-navspan button-date disabled" aria-hidden="true">‹</span>
+                <?php endif; ?>
+                <span class="paging-input">
+                    <input class="button-date" id="current-page-input" type="text" name="paged"
+                           value="<?php echo $block->getData('current-page') ?>" size="1" aria-describedby="table-paging">
+                    <span class="tablenav-paging-text">
+                        out of
+                        <span id="pages-count" class="total-pages"><?php echo $block->getData('pages-count'); ?></span>
                     </span>
+                 </span>
+                <?php if ($block->getData('current-page') < $block->getData('pages-count')): ?>
+                    <button id="btn-page-next" class="next-page button-date">
+                        <span aria-hidden="true">›</span>
+                    </button>
+                    <button id="btn-page-last" class="last-page button-date">
+                        <span aria-hidden="true">»</span>
+                    </button>
+                <?php else: ?>
+                    <span class="tablenav-pages-navspan button-date disabled" aria-hidden="true">›</span>
+                    <span class="tablenav-pages-navspan button-date disabled" aria-hidden="true">»</span>
+                <?php endif; ?>
+            </span>
         </div>
     </div>
-    <
-    <table class="wp - list-table widefat fixed striped posts">
+    <table class="data-grid data-grid-draggable" data-role="grid">
         <thead>
         <tr>
-            <th scope="col">Order</th>
-            <th scope="col">Date</th>
-            <th scope="col">Total</th>
-        </tr>
+            <th class="data-grid-th _sortable _draggable">
+                <span class="data-grid-cell-content">Order</span>
+            </th>
+            <th class="data-grid-th _sortable _draggable">
+                <span class="data-grid-cell-content">Date</span>
+            </th>
+            <th class="data-grid-th _sortable _draggable">
+                <span class="data-grid-cell-content">Total</span>
+            </th>
         </thead>
-
-
         <tbody>
         <?php foreach ($block->getData('page-orders') as $order): ?>
-            <!-- TODO: id with link to order, date created, currency and total value -->
+            <tr class="data-row" data-repeat-index="0">
+                <td class="">
+                    <div class="data-grid-cell-content">#<?php echo $order['entity_id'] ?></div>
+                </td>
+                <td class="">
+                    <div class="data-grid-cell-content"><?php echo $order['created_at'] ?></div>
+                </td>
+                <td class="">
+                    <div class="data-grid-cell-content"><?php echo round($order['grand_total'], 2) . ' ' . $order['base_currency_code'] ?></div>
+                </td>
+            </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
@@ -98,79 +109,3 @@
         requirejs(['orders']);
     })
 </script>
-
-<style>
-    tbody tr:nth-child(odd) td {
-        background: #f5f5f5 !important;
-    }
-
-    td {
-        background: white;
-        display: table-cell !important;
-    }
-
-    .total-orders-h2 {
-        font-weight: 400;
-    }
-
-    .settings-wrapper {
-        position: relative;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-direction: column;
-        margin: 10px 0;
-    }
-
-    .flex-centered {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-    }
-
-    .flex-ended {
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-    }
-
-    .flex-column {
-        flex-direction: column;
-    }
-
-    .wrapper-status {
-        margin-bottom: 2px;
-    }
-
-    .flatpickr-input {
-        background: #fff !important;
-        width: 143px;
-    }
-
-    .wrapper-to-date {
-        margin-left: 10px;
-    }
-
-    .btn-date {
-        margin-left: 10px !important;
-    }
-
-    .currency-wrapper {
-        display: inline-flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-        flex-direction: column;
-    }
-
-    @media (min-width: 768px) {
-        .settings-wrapper {
-            flex-direction: row;
-            align-items: flex-end;
-        }
-
-        .tablenav-pages {
-            position: absolute;
-            right: 0;
-        }
-    }
-</style>

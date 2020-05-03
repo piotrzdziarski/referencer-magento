@@ -46,15 +46,15 @@ class OrdersRetriever
             ->where('fireads_key IS NOT NULL');
 
         if ($this->status) {
-            $select->where("status = $this->status");
+            $select->where("status = '$this->status'");
         }
 
         if ($this->dateFrom) {
-            $select->where("created_at > $this->dateFrom");
+            $select->where("created_at > '$this->dateFrom'");
         }
 
         if ($this->dateTo) {
-            $select->where("created_at < $this->dateTo");
+            $select->where("created_at < '$this->dateTo'");
         }
 
         return $select;

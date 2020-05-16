@@ -43,7 +43,7 @@ use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class OrdersFixture extends Fixture
+class orderOrdersFixture extends Fixture
 {
     /**
      * Batch size for order generation.

@@ -12,4 +12,12 @@
         <observer name="order-status-change-observer"
                   instance="FireAds\Referencer\Observer\OrderStatusChangeObserver" shared="false" />
     </event>
+    <event name="customer_register_success">
+        <observer name="register-observer"
+                  instance="FireAds\Referencer\Observer\RegisterObserver" shared="false" />
+    </event>
+    <event name="customer_login">
+        <observer name="login-observer"
+                  instance="FireAds\Referencer\Observer\LoginObserver" shared="false" />
+    </event>
 </config>

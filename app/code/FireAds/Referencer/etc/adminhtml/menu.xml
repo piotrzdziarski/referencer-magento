@@ -13,5 +13,9 @@
              module="FireAds_Referencer" parent="FireAds_Referencer::bookmark" sortOrder="10"
              dependsOnModule="FireAds_Referencer" action="fireads/orders"
              resource="FireAds_Referencer::bookmark" />
+        <add id="FireAds_Referencer::activity" title="Activity" translate="title"
+             module="FireAds_Referencer" parent="FireAds_Referencer::bookmark" sortOrder="10"
+             dependsOnModule="FireAds_Referencer" action="fireads/activity"
+             resource="FireAds_Referencer::bookmark" />
     </menu>
 </config>

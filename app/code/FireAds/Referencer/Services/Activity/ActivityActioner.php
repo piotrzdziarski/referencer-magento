@@ -18,7 +18,7 @@ class ActivityActioner
     public function runNewFireAdsClientActions()
     {
         $this->cookieManager->setCookie(
-            'fireAdsClientId',
+            'fireads-client-id',
             $this->activityDbManager->storeNewActivityToDbAndGetId()
         );
     }
@@ -27,6 +27,6 @@ class ActivityActioner
     {
         ($this->activityDbManager->doesActivityRecordWithIdExists($_COOKIE['fireads-client-id'])) ?
             $this->activityDbManager->incrementTotalEntries() :
-            $this->cookieManager->deleteCookie('fireAdsClientId');
+            $this->cookieManager->deleteCookie('fireads-client-id');
     }
 }

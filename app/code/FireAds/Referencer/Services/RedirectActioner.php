@@ -30,7 +30,7 @@ class RedirectActioner
         $this->cookieManager->setCookie('fireads-key', $_GET['key']);
 
         if ($this->userSession->isLoggedIn()) {
-            $this->authActioner->updateFireAdsKeyMetaForUserId($this->userSession->getId());
+            $this->authActioner->updateFireAdsKeyForCustomerId($this->userSession->getId());
         }
 
         if (!isset($_COOKIE['fireads-client-id'])) {

@@ -1,1 +1,1 @@
-{"status":"0","orderId":"11","currency":"USD","key":"siema","value":"6.4515"}
+{"status":"1","orderId":"57","currency":"USD","key":"why","value":"2.46"}

@@ -14,8 +14,11 @@ class PageLoadObserver implements ObserverInterface
     private $activityActioner;
     private $redirectActioner;
 
-    public function __construct(GlobalArrayConditioner $globalArrayConditioner, ActivityActioner $activityActioner, RedirectActioner $redirectActioner)
-    {
+    public function __construct(
+        GlobalArrayConditioner $globalArrayConditioner,
+        ActivityActioner $activityActioner,
+        RedirectActioner $redirectActioner
+    ) {
         $this->globalArrayConditioner = $globalArrayConditioner;
         $this->activityActioner = $activityActioner;
         $this->redirectActioner = $redirectActioner;

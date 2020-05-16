@@ -4,36 +4,36 @@ namespace FireAds\Referencer\Services\Auth;
 
 use FireAds\Referencer\Services\Activity\ActivityDbManager;
 use FireAds\Referencer\Services\GlobalArrayConditioner;
-use Magento\Reports\Model\ResourceModel\Customer\Collection;
+use Magento\Framework\App\ResourceConnection;
 
 class AuthActioner
 {
     private $globalArrayConditioner;
     private $activityDbManager;
-    private $customerCollection;
+    private $resourceConnection;
 
     public function __construct(
         GlobalArrayConditioner $globalArrayConditioner,
         ActivityDbManager $activityDbManager,
-        Collection $customerCollection
+        ResourceConnection $resourceConnection
     ) {
         $this->globalArrayConditioner = $globalArrayConditioner;
         $this->activityDbManager = $activityDbManager;
-        $this->customerCollection = $customerCollection;
+        $this->resourceConnection = $resourceConnection->getConnection();
     }
 
-    public function ifKeyCookieIsValidUpdateFireAdsKeyMetaForUserId($userId)
+    public function ifKeyCookieIsValidUpdateFireAdsKeyMetaForUserId($customerId)
     {
         if ($this->globalArrayConditioner->isFireAdsKeyCookieSetAndValid()) {
-            $this->updateFireAdsKeyMetaForUserId($userId);
+            $this->updateFireAdsKeyForCustomerId($customerId);
         }
     }
 
-    public function updateFireAdsKeyMetaForUserId($userId)
+    public function updateFireAdsKeyForCustomerId($customerId)
     {
-        $customer = $this->customerCollection->getItemById($userId);
-        $customer->setData('fireads_key', $_COOKIE['fireads-key']);
-        $this->customerCollection->save();
+        $this->resourceConnection->update('customer_entity', [
+            'fireads_key' => $_COOKIE['fireads-key']
+        ], "entity_id = $customerId");
     }
 
     public function ifClientIdCookieIsValidAndRowIsInDbUpdatedHasRegistered()

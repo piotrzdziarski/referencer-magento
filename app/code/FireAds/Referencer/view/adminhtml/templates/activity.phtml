@@ -1,0 +1,70 @@
+<main class="main">
+    <?php echo $block->getData('test') ?>
+    <form id="form" class="flex items-center">
+        <div class="wrapper-input action-select-wrap">
+            <input id="input-month" type="hidden" name="status" value="<?php echo $block->getData('current-month-row')['index'] ?>"/>
+            <button type="button" class="select action-select" title="Select Items">
+                <span id="input-month-text"><?php echo $block->getData('current-month-row')['label'] ?></span>
+            </button>
+            <div class="action-menu-items">
+                <ul class="list-status action-menu">
+                    <?php foreach ($block->getData('months') as $i => $month): ?>
+                        <li onclick="handleMonthOptionClick(<?php echo "'$i', '$month'" ?>)">
+                            <span class="action-menu-item"><?php echo $month ?></span>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        </div>
+        <div class="wrapper-input action-select-wrap">
+            <input id="input-year" type="hidden" name="status" value="<?php echo $block->getData('current-year') ?>"/>
+            <button type="button" class="select action-select" title="Select Items">
+                <span id="input-year-text"><?php echo $block->getData('current-year') ?></span>
+            </button>
+            <div class="action-menu-items">
+                <ul class="list-status action-menu">
+                    <?php foreach ($block->getData('years') as $year): ?>
+                        <li onclick="handleYearOptionClick(<?php echo $year ?>)">
+                            <span class="action-menu-item"><?php echo $year ?></span>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        </div>
+        <button id="submit" title="Search for FireAds orders" type="submit" class="action-default scalable save primary save-encryption-key ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="crypt-key-edit-save-button" role="button" aria-disabled="false">
+            <span class="ui-button-text">
+                <span>Submit</span>
+            </span>
+        </button>
+    </form>
+    <div class="articles-container grid md:grid-cols-3">
+        <article class="article">
+            <h3 class="article-header">
+                Unique entries:
+            </h3>
+            <h4 class="article-value">
+                <?php echo $block->getData('activity-data')['unique-entries'] ?>
+            </h4>
+        </article>
+        <article class="article">
+            <h3 class="article-header">
+                Registered users:
+            </h3>
+            <h4 class="article-value">
+                <?php echo $block->getData('activity-data')['registered-users'] ?>
+            </h4>
+        </article>
+        <article class="article">
+            <h3 class="article-header">
+                Total activity:
+            </h3>
+            <h4 class="article-value">
+                <?php echo $block->getData('activity-data')['total-entries'] ?>
+            </h4>
+        </article>
+    </div>
+</main>
+
+<script>
+    requirejs(['activity']);
+</script>

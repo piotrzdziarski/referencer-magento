@@ -22,7 +22,7 @@ class ActivityDbManager
     public function storeNewActivityToDbAndGetId()
     {
         $this->activity->setData([
-            'date_add' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
             'total_entries' => 1,
             'has_registered' => false
         ]);
